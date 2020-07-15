@@ -11,10 +11,21 @@ const ProjectBanner = ({width,height,x,y,stickyTitle,stickyDesc,img,close,closeP
     const sticky = useRef(null);
     const banner = useRef(null);
     const t1 = new TimelineLite();
+    const transition = {duration: 2, ease: [0.43,0.13,0.23,0.96]};
+    const imgBanner = {
+        initial: { scale: 0.9, opacity: 0 },
+        enter: { scale: 1, opacity: 1, transition },
+        exit: {
+          scale: 0.5,
+          opacity: 0,
+          transition: { duration: 1.5, ...transition }
+        }
+      };
     useEffect(() => {
+       
         t1.to(
             banner.current,
-            1,
+            .8,
             {
                 css: {
                     left: 0+sticky.current.clientWidth,
@@ -24,10 +35,10 @@ const ProjectBanner = ({width,height,x,y,stickyTitle,stickyDesc,img,close,closeP
         );
         t1.to(
             banner.current,
-            1,
+            .6,
             {
                 css: {
-                    top: 64,
+                    top: 0,
                     height: window.innerHeight - window.innerHeight/6
                 },
                 delay: .1
@@ -52,8 +63,6 @@ const ProjectBanner = ({width,height,x,y,stickyTitle,stickyDesc,img,close,closeP
             style={{position:"fixed",width:width,height:height,background: `#ececec url('${img}') no-repeat`,left:x,top:y}}
             ref={banner} 
             className="banner-project"
-            exit={{opacity:0}}
-            initial={{opacity:1}}
             >
 
             </motion.section>

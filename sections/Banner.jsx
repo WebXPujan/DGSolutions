@@ -90,13 +90,11 @@ const Banner = (props) => {
         //e.preventDefault();
         
         timeline.eventCallback("onReverseComplete", function(){
-       setTimeout(()=>{
+        setTimeout(()=>{
         projectClose(false);
+        },1000);
         router.push("/");
-       // document.querySelector('#navBar .wrapper').classList.add('slideUp')
-       },1000);
-                
-            
+     
         });
         timeline.reverse();
         
@@ -132,24 +130,19 @@ const Banner = (props) => {
             <>
             {
                 isDragged && (
-                    
+                    !isProjectOpen ? 
                     <AnimatePresence exitBeforeEnter>
                         <StickyProjectInfo stickyTitle={sticky.title} stickyDesc={sticky.desc} close={false} />
                     </AnimatePresence>
-                
-                ) 
-                    
-                
-                
-            }
-
-            {
-                isDragged && (isProjectOpen && (
+                    :
                     <AnimatePresence >
                     <ProjectBanner x={viewPort.x} y={viewPort.y} width={viewPort.width} height={viewPort.height} stickyTitle={projectDetails.name} stickyDesc={projectDetails.desc} img={projectDetails.img} close={true} closeProject={handleCloseProject}/>
                     </AnimatePresence>
-                    ))
+                
+                ) 
+                   
             }
+
             </>
        
             <motion.section exit={{opacity:0}} className={isDragged ? "sections has-offset visible" : "sections has-offset hidden"} id="banner" ref={slider} onWheel={isDragged ? handleWheel : undefined}>
@@ -202,8 +195,13 @@ const Banner = (props) => {
             transition={transition}
             dragControls={dragControls}
             >
+                {
+                    !isDragged && (
+                        <div className="puller"></div>
+                    )
+                }
                 
-                <motion.ul className={isDragged ? (isProjectOpen ? "showcase expanded fadeOut" : "showcase expanded") : "showcase"}
+                <motion.ul className={isDragged ? (isProjectOpen ? "showcase expanded viewport" : "showcase expanded") : "showcase"}
                 onMouseEnter={() => setCursor(`${isDragged ? '' : 'dragged'}`)}
                 onMouseLeave={() => setCursor("")}
                 style={{ showcaseSlide, fadeOut }}
@@ -218,12 +216,12 @@ const Banner = (props) => {
                             key={project.id}
                             >
                                 <div className="list-items">
-                                    <div className="thumbnail" 
+                                    <div className={isDragged ? (isProjectOpen ? "thumbnail fadeOut" : "thumbnail") : "thumbnail"} 
                                     style={{ background: `url('${project.img_url}') no-repeat` }}
                                     onMouseLeave={()=>setCursor(`${isDragged ? "" : "dragged"}`)}
                                
                                      > 
-                                        <div className="info" >
+                                        <div className={isDragged ? (isProjectOpen ? "info hide" : "info") : "info"} >
                                             <strong className="number gray">{`0${i+1}`}</strong>
                                             <h1 className="black title title__small text-capitalize">{project.name}</h1>
                                             <p className="green subtitle subtitle__small big text-capitalize sec-font"><i className="fas fa-info-circle"></i>website, Mobile Apps</p>

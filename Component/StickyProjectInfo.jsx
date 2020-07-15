@@ -13,16 +13,18 @@ const StickyProjectInfo = ({stickyTitle,stickyDesc,sticky,close,closeProject,tim
                 <div className="content">
                     {
                         close && (
-                            <div className="ham ham-close"
+                            <motion.div className="ham ham-close"
                                 onMouseEnter={()=>setCursor("hovered")}
                                 onMouseLeave={() => setCursor("")}
                                 onClick={() => closeProject(timeline)}
+                                initial={{x:"-20%",opacity:0}}
+                                animate={{x:"0%",opacity:1,transition: {delay:.5,duration:1,ease:transition.ease}}}
                                 >
                                 <a href="" className="dg-link" onClick={e => e.preventDefault()}>
                                     <span className="icons">
                                         <svg id="Capa_1" enableBackground="new 0 0 413.348 413.348" viewBox="0 0 413.348 413.348" xmlns="http://www.w3.org/2000/svg"><path d="m413.348 24.354-24.354-24.354-182.32 182.32-182.32-182.32-24.354 24.354 182.32 182.32-182.32 182.32 24.354 24.354 182.32-182.32 182.32 182.32 24.354-24.354-182.32-182.32z"/></svg>                    </span>
                                 </a>
-                            </div>
+                            </motion.div>
                         )
                     }
                     <motion.h3 

@@ -1,10 +1,48 @@
-import {useContext} from 'react';
+import {useContext,useState} from 'react';
 import {HomeContext} from '../context/HomeContext';
 import Button from '../Component/Button';
+import { AnimatePresence,motion } from 'framer-motion';
 const Services = () => {
 
     const data = useContext(HomeContext);
+
+    const [isClicked,setClick] = useState(false);
+    const [activeIndex, setActiveIndex] = useState(0);
+
+    const handleClick = (event,index) => {
+        event.preventDefault();
+        setClick(true);
+        setActiveIndex(index);
+    }
+    const transition = {duration: 2, ease: [0.43,0.13,0.23,0.96]};
+    const slideUp = {
+            initial: {
+                opacity: 0,
+                y: "10%"
+            },
+            animate: {
+            opacity: 1,
+            y: 0,
+            transition: {duration:1,ease:transition.ease}
+            }
+        
+    }
+
+    const img = {
+        initial: {
+            opacity: 0
+        },
+        fadeInUp: (custom) => {
+            return {
+                opacity: 1,
+                transition: {delay:.5+(custom/4),duration:1,ease:transition.ease}
+            }
+        }
+    }
+
+    
     return(
+        
         <section className="sections has-offset" id="services">
         <div className="container">
             <div className="columns">
@@ -16,8 +54,8 @@ const Services = () => {
                         <ul>
                             {
                                 data[0].services.map((service,i)=>(
-                                    <li key={i}>
-                                <a href="" className="dg-link">
+                                    <li key={i} className={i === activeIndex ? "active" : ""}>
+                                <a href="" className="dg-link" onClick={(e)=>handleClick(e,i)}>
                                     <span className="icons left"></span>
                                 <h1 className="black title title__small big">{service.name}</h1>
                                     <span className="icons right">
@@ -49,37 +87,52 @@ const Services = () => {
                 </div>
               </div>
               <div className="column col-md-12">
-                    <div className="video" style={{width: "100%",height: "500px",background:"#e1e1e1"}}></div>
+                  {
+                      !isClicked && (
+                        <div className="video" style={{width: "100%",height: "500px",background:"#e1e1e1"}}></div>
+                      )
+                  }
+                    
               </div>
             </div>
         </div>
         <section className="offset">
-            <div className="info">
-                <h1 className="black title title__big big">Website Development</h1>
-                <p className="para">Lorem ipsum, dolor sit amet consectetur adipisicing elit. sequi enim, a vero porro repudiandae quibusdam error molestiae.</p>
-                <p>
-                    <Button type="normal" title="Get Details"/>
-                </p>
-             </div>
-             <div className="slider">
-                 <ul>
-                     <li className="list-items">
-                         <div className="thumb"></div>
-                     </li>
-                     <li className="list-items">
-                        <div className="thumb"></div>
-                    </li>
-                    <li className="list-items">
-                        <div className="thumb"></div>
-                    </li>
-                    <li className="list-items">
-                        <div className="thumb"></div>
-                    </li>
-                    <li className="list-items">
-                        <div className="thumb"></div>
-                    </li>
-                 </ul>
-             </div>
+            {
+                isClicked && (
+                    <AnimatePresence exitBeforeEnter>
+                    <motion.div exit={{opacity:0,y:"0%"}} enter={{opacity:1}} className="wrap" key={data[0].services[activeIndex].id}>
+                        <div className="info">
+                <motion.h1 initial="initial" animate="animate" variants={slideUp} className="black title title__big big">{data[0].services[activeIndex].name}</motion.h1>
+                <motion.p initial="initial" animate="animate" variants={slideUp} className="para">{data[0].services[activeIndex].desc}</motion.p>
+                            <motion.p 
+                            initial="initial"
+                            animate="animate"
+                            variants={slideUp}
+                            >
+                                <Button type="normal" title="Get Details"/>
+                            </motion.p>
+                        </div>
+                        <div className="slider">
+                            <ul>
+                                {
+                                    data[0].services[activeIndex].images.map((image,i) => (
+                                        <motion.li variants={img} animate="fadeInUp" custom={i} initial="initial" className="list-items" key={i}>
+                                            <div className="thumb">
+                                                <img src={image.url} alt={image.alt} />
+                                            </div>
+                                        </motion.li>
+                                    ))
+                                }
+                                
+                                
+                            </ul>
+                        </div>
+                    </motion.div>
+                    </AnimatePresence>
+
+                )
+            }
+            
         </section>
     </section>
     );
