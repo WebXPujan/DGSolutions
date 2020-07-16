@@ -9,7 +9,7 @@ import {GlobalProvider} from '../context/GlobalContext';
 import OffNav from '../sections/OffNav';
 import Overlay from '../Component/Overlay';
 import gsap from "gsap";
-import {AnimatePresence} from "framer-motion";
+import { CursorProvider } from '../context/CursorContext';
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -73,6 +73,7 @@ export default function MyApp(props) {
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="/js/main.js"></script>
       </Head>
+      <CursorProvider>
       <CustomCursor />
       <Overlay />
       <OffNav toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} nav={nav} button={button}/>  
@@ -85,6 +86,7 @@ export default function MyApp(props) {
        
       
       </div>
+      </CursorProvider>
     </GlobalProvider>
   );
 }

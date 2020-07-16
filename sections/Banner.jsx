@@ -66,21 +66,22 @@ const Banner = (props) => {
 
     const viewProject = (e,details) => {
        //e.preventDefault();
-       var offset = jQuery(e.currentTarget).closest(".thumbnail").offset();
+       jQuery(e.currentTarget).closest(".image").addClass('active');
+       var offset = jQuery(e.currentTarget).closest(".image").offset();
        var w = jQuery(window);
        
        props.setImagePos({
            x: offset.left-w.scrollLeft(),
            y: offset.top-w.scrollTop(),
-           width:jQuery(e.currentTarget).closest(".thumbnail").width(),
-           height: jQuery(e.currentTarget).closest(".thumbnail").height()
+           width:jQuery(e.currentTarget).closest(".image").width(),
+           height: jQuery(e.currentTarget).closest(".image").height()
        });
        projectClose(true);
        setViewPort({
         x: offset.left-w.scrollLeft(),
         y: offset.top-w.scrollTop(),
-        width:jQuery(e.currentTarget).closest(".thumbnail").width(),
-        height: jQuery(e.currentTarget).closest(".thumbnail").height()
+        width:jQuery(e.currentTarget).closest(".image").width(),
+        height: jQuery(e.currentTarget).closest(".image").height()
        });
        setProjectDetails(details);
        
@@ -92,7 +93,7 @@ const Banner = (props) => {
         timeline.eventCallback("onReverseComplete", function(){
         setTimeout(()=>{
         projectClose(false);
-        },1000);
+        },1);
         router.push("/");
      
         });
@@ -217,7 +218,7 @@ const Banner = (props) => {
                             >
                                 <div className="list-items">
                                     <div className={isDragged ? (isProjectOpen ? "thumbnail fadeOut" : "thumbnail") : "thumbnail"} 
-                                    style={{ background: `url('${project.img_url}') no-repeat` }}
+                                    // style={{ background: `url('${project.img_url}') no-repeat` }}
                                     onMouseLeave={()=>setCursor(`${isDragged ? "" : "dragged"}`)}
                                
                                      > 
@@ -227,7 +228,8 @@ const Banner = (props) => {
                                             <p className="green subtitle subtitle__small big text-capitalize sec-font"><i className="fas fa-info-circle"></i>website, Mobile Apps</p>
                                         
                                         </div> 
-                                        <div className="image">
+                                        <div className={isDragged ? (isProjectOpen ? "image" : "image clip") : "image"}>
+                                            <img src={project.img_url} alt=""/>
                                             {
                                                 isDragged && (
                                                 <Button type="inverted" 

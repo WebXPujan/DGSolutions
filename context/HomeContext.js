@@ -141,6 +141,75 @@ export const HomeProvider = props => {
             }
 
         ]
+
+    },
+    {
+      trustee: [
+          {
+              client_name: "client1",
+              logo: "imagepath"
+          },
+          {
+            client_name: "client2",
+            logo: "imagepath"
+        },
+        {
+            client_name: "client3",
+            logo: "imagepath"
+        },
+        {
+            client_name: "client4",
+            logo: "imagepath"
+        },
+        {
+            client_name: "client5",
+            logo: "imagepath"
+        },
+        {
+            client_name: "client6",
+            logo: "imagepath"
+        },
+        {
+            client_name: "client7",
+            logo: "imagepath"
+        },
+        {
+            client_name: "client8",
+            logo: "imagepath"
+        },
+        {
+            client_name: "client9",
+            logo: "imagepath"
+        }
+      ]  
+    },
+    {
+       testimonials: [
+           {
+               client_name: "John Doe",
+               client_company: "Hongshi Cement",
+               client_post: "CEO",
+               testimonial: "lorem blah blah blah",
+               title: "Excellent & Exceptional Result",
+               case_study: "/project/hongshi-cement",
+           },
+            {
+                client_name: "Janny Doe",
+                client_company: "Hard Rock",
+                client_post: "CEO",
+                testimonial: "lorem blah blah blah",
+                title: "Excellent & Exceptional Result",
+                case_study: "/project/hard-rock",
+            },
+            {
+                client_name: "Josheph Doe",
+                client_company: "Infocus",
+                client_post: "CEO",
+                testimonial: "lorem blah blah blah",
+                title: "Excellent & Exceptional Result",
+                case_study: "/project/infocus",
+            }
+       ] 
     }];
 
     

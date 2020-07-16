@@ -8,6 +8,7 @@ import {motion,AnimatePresence} from 'framer-motion';
 const ProjectBanner = ({width,height,x,y,stickyTitle,stickyDesc,img,close,closeProject}) => {
 
     const [timeline,setTimeline] = useState(null);
+    const [styles,setStyles] = useState({});
     const sticky = useRef(null);
     const banner = useRef(null);
     const t1 = new TimelineLite();
@@ -22,35 +23,64 @@ const ProjectBanner = ({width,height,x,y,stickyTitle,stickyDesc,img,close,closeP
         }
       };
     useEffect(() => {
-       
+       setStyles({
+           position:"absolute",
+           width: window.innerWidth - sticky.current.clientWidth,
+           height: window.innerHeight - window.innerHeight/6,
+           left: 0+sticky.current.clientWidth,
+           top: 0
+        });
+        // t1.to(
+        //     banner.current,
+        //     .8,
+        //     {
+        //         css: {
+        //             left: 0+sticky.current.clientWidth,
+        //             width: window.innerWidth - sticky.current.clientWidth
+        //         }
+        //     }
+        // );
+        // t1.to(
+        //     banner.current,
+        //     .6,
+        //     {
+        //         css: {
+        //             top: 0,
+        //             height: window.innerHeight - window.innerHeight/6
+        //         },
+        //         delay: .1
+        //     }
+        // );
+        // t1.to(
+        //     banner.current,
+        //     {
+        //         css:{position:"absolute"},
+        //         delay: .1
+        //     }
+        // )
+        // t1.from(
+        //     banner.current,
+        //     .8,{
+        //         css: {
+        //             left:x,
+        //             width:width,
+        //             height:height,
+        //             top:y,
+        //         }
+        //     }
+        // )
         t1.to(
             banner.current,
-            .8,
-            {
+            .6,{
                 css: {
+                    width: window.innerWidth - sticky.current.clientWidth,
+                    height: window.innerHeight - window.innerHeight/6,
                     left: 0+sticky.current.clientWidth,
-                    width: window.innerWidth - sticky.current.clientWidth
-                }
-            }
-        );
-        t1.to(
-            banner.current,
-            .6,
-            {
-                css: {
-                    top: 0,
-                    height: window.innerHeight - window.innerHeight/6
-                },
-                delay: .1
-            }
-        );
-        t1.to(
-            banner.current,
-            {
-                css:{position:"absolute"},
-                delay: .1
+                    top: 0
+                 }
             }
         )
+        
         setTimeline(t1);
         //setTimeout(()=>t1.reverse(),5000);
 
@@ -59,13 +89,18 @@ const ProjectBanner = ({width,height,x,y,stickyTitle,stickyDesc,img,close,closeP
     return (
         <motion.section exit={{opacity:0}} initial={{opacity:1}}>
             <StickyProjectInfo stickyTitle={stickyTitle} stickyDesc={stickyDesc} sticky={sticky} close={close} closeProject={closeProject} timeline={timeline}/>
-            <motion.section 
+            {/* <motion.section 
             style={{position:"fixed",width:width,height:height,background: `#ececec url('${img}') no-repeat`,left:x,top:y}}
             ref={banner} 
             className="banner-project"
             >
 
-            </motion.section>
+            </motion.section> */}
+            <section className="banner-project"
+            ref={banner}
+            style={{position:"fixed",width:width,height:height,background: `#ececec url('${img}') no-repeat`,left:x,top:y}}>
+                <img src={img} alt=""/>
+            </section>
         </motion.section>
     );
 }

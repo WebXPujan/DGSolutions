@@ -17,6 +17,7 @@ const Index = ({setImagePos,banner,projects}) =>{
 
     return(
       <HomeProvider>
+        
           <Banner setImagePos={setImagePos} banner={banner} projects={projects} />
           <Services />
           <Trustee />
@@ -25,6 +26,7 @@ const Index = ({setImagePos,banner,projects}) =>{
           <Blog />
           <CTA />
           <Footer />
+          
       </HomeProvider>
     );
 

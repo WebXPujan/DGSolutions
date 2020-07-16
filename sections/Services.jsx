@@ -18,7 +18,7 @@ const Services = () => {
     const slideUp = {
             initial: {
                 opacity: 0,
-                y: "10%"
+                y: "50%"
             },
             animate: {
             opacity: 1,
@@ -117,7 +117,7 @@ const Services = () => {
                                 {
                                     data[0].services[activeIndex].images.map((image,i) => (
                                         <motion.li variants={img} animate="fadeInUp" custom={i} initial="initial" className="list-items" key={i}>
-                                            <div className="thumb">
+                                            <div className="thumb clip">
                                                 <img src={image.url} alt={image.alt} />
                                             </div>
                                         </motion.li>

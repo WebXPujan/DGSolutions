@@ -1,5 +1,6 @@
 import React,{useState,useEffect,useContext} from 'react'
 import {GlobalContext} from '../context/GlobalContext'
+import { CursorContext } from '../context/CursorContext';
 
 const Cursor = ({type,style,x,y}) => {
     
@@ -81,15 +82,17 @@ const Cursor = ({type,style,x,y}) => {
 const CustomCursor = () => {
 
     const [mousePos,setMousePos] = useState({
-        x: 300,
-        y: 300
+        x: 0,
+        y: 0
     });
 
     const [cursor,setCursor] = useContext(GlobalContext);
+    const [mPos,setMPos] = useContext(CursorContext);
 
     const onMouseMove = e => {
         const {pageX: x, pageY: y} = e 
         setMousePos({x, y})
+        setMPos({x,y})
         //setCursor(cursor)
         // if(x <= 5 || y <= 5){
         //     setCursor("hidden")
