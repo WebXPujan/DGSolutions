@@ -1,6 +1,10 @@
 /*google font playfair*/
 @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&family=Playfair+Display:wght@400;500;700&display=swap');
 /*global styles*/
+
+:root{
+    --transition: all .6s cubic-bezier(.3,0,.2,1);
+}
 .green{
     color: #27e027;
 }
@@ -60,12 +64,23 @@
     border: 1px solid #e1e1e1;
     padding: 10px;
     display: flex;
-    justify-content: center;
+    align-items: center;
 }
 .article__card .thumb{
+    flex: 30%;
     width: 100%;
     background: #e1e1e1;
     margin-right: 10px;
+    overflow: hidden;
+    align-self: stretch;
+    max-height: 220px;
+    min-height: 220px;
+    position: relative;
+}
+.article__card .thumb img{
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
 }
 .article__card .thumb:after{
     content: "";
@@ -73,6 +88,21 @@
 }
 .article__card .excerpt{
     padding: 0 5%;
+    flex: 50%;
+}
+.article__card .excerpt .para{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
+.article__card .excerpt h1 a{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 .title__article{
     font-size: 18px;
@@ -81,6 +111,20 @@
     padding-bottom: 30px;
     margin-bottom: 30px;
     line-height: 28px;
+}
+.title__article a,
+.title__article a:visited,
+.title__article a:hover,
+.title__article a:active{
+    text-decoration: none;
+    outline: 0;
+    color: inherit;
+    border: none;
+    box-shadow: none;
+    transition: var(--transition);
+}
+.title__article a:hover{
+    color: #27e027;
 }
 .centered.title__border{
     text-align: center;
@@ -119,6 +163,39 @@
 }
 .inverted{
     color: #fff;
+}
+.cover{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: linear-gradient(-45deg, #27e027, #15b64b, #a9d430, #00a8ff);
+	background-size: 400% 400%;
+	animation: gradient 1s ease infinite;
+}
+.cover.exit{
+    animation-delay: 1s;
+    animation: shrink 1s;
+}
+@keyframes shrink{
+    0%{
+        left: 0;
+    }
+    100%{
+        left: auto;
+    }
+}
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }
 
 .nav-link li a,
@@ -511,6 +588,17 @@ ul,li{
     ms-overflow-style: none;
     scrollbar-width: none;
 }
+body{
+    overscroll-behavior-y: none;
+}
+.App {
+    position:fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
 /* Spectre Override*/
 .push{
     position: relative;
@@ -806,6 +894,7 @@ section#banner .showcase .thumbnail .image{
     height: 100%;
     margin-top: -13px;
     width: 100%;
+    overflow: hidden;
 }
 section#banner .showcase .thumbnail .image img{
     pointer-events: none;
@@ -1128,6 +1217,47 @@ section#testimonials .wrap h1{
 section#testimonials .testi-slider{
     padding-left: 15%;
     max-width: 80%;
+    min-height: 300px;
+    max-height: 300px;
+}
+section#testimonials .testi-slider .list-items,
+section#testimonials .testi-slider .list-items h1,
+section#testimonials .testi-slider .list-items p,
+section#testimonials .testi-slider .list-items .cta{
+    opacity: 0;
+    transform: translateY(0%);
+}
+section#testimonials .testi-slider .list-items.active{
+    opacity: 1;
+}
+/* .slideUpFadeIn{
+    animation: 1s slideUpFadeIn;
+} */
+section#testimonials .testi-slider .list-items.active.slideUpFadeIn .title.big{
+    animation: 1s slideUpFadeIn forwards;
+}
+section#testimonials .testi-slider .list-items.active.slideUpFadeIn p.para{
+    animation: 1s slideUpFadeIn;
+    animation-delay: .4s;
+}
+section#testimonials .testi-slider .list-items.active.slideUpFadeIn .title.green,
+section#testimonials .testi-slider .list-items.active.slideUpFadeIn .cta{
+    animation: 1s slideUpFadeIn;
+    animation-delay: .5s;
+}
+section#testimonials .testi-slider .list-items.active.slideUpFadeIn p.black{
+    animation: 1s slideUpFadeIn;
+    animation-delay: .6s;
+}
+@keyframes slideUpFadeIn{
+    0%{
+        transform: translateY(30%);
+        opacity: 0;
+    }
+    100%{
+        transform: translateY(0%);
+        opacity: 1;
+    }
 }
 section#testimonials .testi-slider .info{
     margin: 50px 0;
@@ -1145,10 +1275,29 @@ section#testimonials .indicator{
 }
 section#testimonials .indicator li{
     width: calc(33.33% - 5px);
-    height: 6px;
-    background-color: #e1e1e1;
+    height: 20px;
+    transform-origin: bottom center;
+    position: relative;
 }
-
+section#testimonials .indicator li::after,
+section#testimonials .indicator li::before{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #e1e1e1;
+    transition: var(--transition);
+}
+section#testimonials .indicator li::before{
+   width: 0%;
+   background-color: #27e027;
+   z-index: 2;
+}
+section#testimonials .indicator li:hover::before,
+section#testimonials .indicator li.active::before{
+    width: 100%;
+}
 section#testimonials section.offset ul {
     display: flex;
     height: 100%;
@@ -1174,11 +1323,44 @@ section#testimonials section.offset ul li .client-image span.rect{
     padding: 150px;
     border: #00a8ff 10px solid;
     z-index: -1;
+    transform: translateX(0%);
+    opacity: 1;
 }
 section#testimonials section.offset ul li .client-image img{
     display: block;
     margin-left: 20%;
     height: 100%;
+    transform: translateX(0%);
+    object-fit: cover;
+}
+section#testimonials section.offset ul li .client-image img.active,
+section#testimonials section.offset ul li .client-image span.rect.active{
+    opacity: 1;
+}
+section#testimonials section.offset ul li .client-image img.active.fadeIn{
+    animation: slideRight 1s;
+}
+section#testimonials section.offset ul li .client-image span.rect.active.slideLeftFadeIn{
+    animation-delay: .3s;
+    animation: slideLeftFadeIn 1s;
+}
+@keyframes slideRight{
+    0%{
+        transform: translateX(-5%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+}
+@keyframes slideLeftFadeIn{
+    0%{
+        opacity: 0;
+        transform: translateX(10%);
+    }
+    100%{
+        opacity: 1;
+        transform: translateX(0%);
+    }
 }
 
 /*testimonial*/
@@ -1196,13 +1378,6 @@ section#blog .news-wrap{
 section#blog .news-wrap .article__card{
     width: 49%;
     margin-bottom: 20px;
-}
-section#blog .news-wrap .article__card .para{
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 3;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
 }
 /*article news and blog*/
 /*cta*/
@@ -1397,6 +1572,10 @@ footer .screen{
         padding: 160px;
         margin-left: 10%;
     }
+    section#testimonials .testi-slider{
+        max-height: 60vh;
+        max-width: 100%;
+    }
     footer .arrow{
         right: 1%;
     }
@@ -1460,7 +1639,7 @@ footer .screen{
     }
     section#testimonials .testi-slider {
         padding-left: 0;
-        max-width: 100%;
+        margin-bottom: 10%;
     }
     section#testimonials .testi-slider .info{
         flex-direction: column;

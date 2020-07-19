@@ -7,6 +7,8 @@ import useSmoothScroll from "use-smooth-scroll";
 import gsap from "gsap";
 import ProjectBanner from './ProjectBanner';
 import { useRouter } from 'next/router';
+import ProgressiveImage from 'react-progressive-graceful-image'
+import LayerComponent from '../Component/LayerComponent'
 
 const Banner = (props) => {
 
@@ -40,6 +42,7 @@ const Banner = (props) => {
     const sliderWrapper = useRef(null);
     const cta = useRef(null);
     const titleBig = useRef(null);
+    const featureImage = useRef(null);
 
     useEffect(() => {
         
@@ -53,7 +56,15 @@ const Banner = (props) => {
             
       
         });
-      console.log(isProjectOpen);
+      //console.log(isProjectOpen);
+
+
+    //   gsap.from(
+    //       featureImage.current,
+    //       .6,{
+    //           css:{width:0}
+    //       }
+    //   )
        return () => x.set(0)
         
     }, [x]);
@@ -124,7 +135,9 @@ const Banner = (props) => {
    }
   
 
-
+   const placeholder = (
+           <div className="cover"></div>
+  );
     return(
         //onWheel={isDragged ? handleWheel : undefined}
         <>
@@ -228,8 +241,20 @@ const Banner = (props) => {
                                             <p className="green subtitle subtitle__small big text-capitalize sec-font"><i className="fas fa-info-circle"></i>website, Mobile Apps</p>
                                         
                                         </div> 
-                                        <div className={isDragged ? (isProjectOpen ? "image" : "image clip") : "image"}>
-                                            <img src={project.img_url} alt=""/>
+                                        <div 
+                                        className={isDragged ? (isProjectOpen ? "image" : "image clip") : "image"} 
+                                        ref={featureImage}
+                                        >
+                                            <ProgressiveImage src={project.img_url} placeholder="" delay={100}>
+                                                {(src, loading) => {
+
+                                                    return loading ? <div className="cover"/> : <img src={src} alt={project.name} />
+                                                }
+
+                                                }
+                                            </ProgressiveImage>
+                                            
+
                                             {
                                                 isDragged && (
                                                 <Button type="inverted" 

@@ -2,6 +2,7 @@ import {useContext,useState} from 'react';
 import {HomeContext} from '../context/HomeContext';
 import Button from '../Component/Button';
 import { AnimatePresence,motion } from 'framer-motion';
+import ProgressiveImage from 'react-progressive-graceful-image'
 const Services = () => {
 
     const data = useContext(HomeContext);
@@ -118,7 +119,14 @@ const Services = () => {
                                     data[0].services[activeIndex].images.map((image,i) => (
                                         <motion.li variants={img} animate="fadeInUp" custom={i} initial="initial" className="list-items" key={i}>
                                             <div className="thumb clip">
-                                                <img src={image.url} alt={image.alt} />
+                                            <ProgressiveImage src={image.url} placeholder="" delay={100}>
+                                                {(src, loading) => {
+
+                                                    return loading ? <div className="cover"/> : <img src={src} alt={image.alt} />
+                                                }
+
+                                                }
+                                            </ProgressiveImage>
                                             </div>
                                         </motion.li>
                                     ))

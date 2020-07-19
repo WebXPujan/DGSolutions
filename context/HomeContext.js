@@ -192,6 +192,7 @@ export const HomeProvider = props => {
                testimonial: "lorem blah blah blah",
                title: "Excellent & Exceptional Result",
                case_study: "/project/hongshi-cement",
+               client_img: "https://unsplash.it/1366"
            },
             {
                 client_name: "Janny Doe",
@@ -200,6 +201,7 @@ export const HomeProvider = props => {
                 testimonial: "lorem blah blah blah",
                 title: "Excellent & Exceptional Result",
                 case_study: "/project/hard-rock",
+                client_img: "https://unsplash.it/1367"
             },
             {
                 client_name: "Josheph Doe",
@@ -208,6 +210,7 @@ export const HomeProvider = props => {
                 testimonial: "lorem blah blah blah",
                 title: "Excellent & Exceptional Result",
                 case_study: "/project/infocus",
+                client_img: "https://unsplash.it/1368"
             }
        ] 
     }];
