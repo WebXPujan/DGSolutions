@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import Footer from '../sections/Footer';
 import DisplayGrid from '../sections/DisplayGrid';
-import ProjectBanner from '../sections/ProjectBanner';
 
-const Projects = ({loading,setLoading}) => {
+const Team = ({loading,setLoading}) => {
     useEffect(() => {
         setLoading(!loading); 
     }, []);
@@ -18,10 +17,10 @@ const Projects = ({loading,setLoading}) => {
                 </div>
             </div>
         </section>
-        <DisplayGrid col={2} type="projects" loading={loading} setLoading={setLoading} />
+        <DisplayGrid col={2} type="team" loading={loading} setLoading={setLoading}/>
         <Footer />
     </>
     );
 }
 
-export default Projects;
+export default Team;

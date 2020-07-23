@@ -1,7 +1,7 @@
 import {useContext,useEffect} from "react"
 import {GlobalContext} from "../context/GlobalContext"
 import Button from '../Component/Button'
-import gsap from "gsap"
+import Navlink from "../Component/NavLink"
 
 const OffNav = ({toggleMenu,setToggleMenu,nav,button}) => {
 
@@ -10,15 +10,7 @@ const OffNav = ({toggleMenu,setToggleMenu,nav,button}) => {
         setToggleMenu(!toggleMenu)
         setCursor("hovered");
     }
-    // useEffect(() => {
-    //     gsap.from(document.querySelector("#mega-menu"),{
-    //         opacity: 0,
-    //         y: -100,
-    //         duration: .3,
-    //         ease: "elastic"
-    //     });
-    //     console.log("d");
-    // }, [toggleMenu]);
+ 
 
     return(
     <>
@@ -41,14 +33,7 @@ const OffNav = ({toggleMenu,setToggleMenu,nav,button}) => {
                             onMouseEnter={()=>setCursor("inverted-hovered")}
                             onMouseLeave={() => setCursor("")}/>
                             </div>
-                            <ul className="nav-items nav-link animate-link">
-                                <li><a href="">Home</a></li>
-                                <li><a href="">Gurkha Team</a></li>
-                                <li><a href="">Our Services</a></li>
-                                <li><a href="">Case Studies</a></li>
-                                <li><a href="">Podcast</a></li>
-                                <li><a href="">Blog</a></li>
-                            </ul>
+                            <Navlink setToggleMenu={setToggleMenu} toggleMenu={toggleMenu} />
                             <p>
                             <Button type="inverted border-green" title="Start Project" button={button}/>
                             </p>

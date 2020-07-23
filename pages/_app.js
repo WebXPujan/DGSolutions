@@ -1,4 +1,4 @@
-import React,{useRef} from 'react';
+import React,{useRef,useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import '../public/css/styles.css';
@@ -10,6 +10,7 @@ import OffNav from '../sections/OffNav';
 import Overlay from '../Component/Overlay';
 import gsap from "gsap";
 import { CursorProvider } from '../context/CursorContext';
+import useWindowSize from "../Hooks/useWindowSize";
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;
@@ -42,7 +43,7 @@ export default function MyApp(props) {
         y: -20,
         delay: 0
       });
-      tl.from(".animate-link a",.4,{
+      tl.from("#animate-link a",.4,{
         y: 50,
         delay: 0,
         stagger: {
@@ -59,6 +60,57 @@ export default function MyApp(props) {
     
     !toggleMenu ? tl.reverse() : null;
   }, [toggleMenu]);
+
+  //hook
+  const size = useWindowSize();
+  //Ref
+  const app = useRef()
+  const scrollContainer = useRef()
+
+  //state
+  const [height,setHeight] = useState(0);
+  const [loading,setLoading] = useState(true);
+
+  const skewConfigs = {
+    ease: .1,
+    current: 0,
+    previous: 0,
+    rounded: 0
+  }
+
+
+  useEffect(() => {
+
+    // console.log(size);
+      setHeight(size.height);
+      //document.querySelector('body').style.height = `${scrollContainer.current.getBoundingClientRect().height+64}px`
+      
+
+  }, [loading,height]);
+
+
+  // useEffect(() => {
+  //   requestAnimationFrame(() => skewScrolling())
+  // },[])
+  
+   
+  // const skewScrolling = () => {
+  //   skewConfigs.current = window.scrollY;
+  //   skewConfigs.previous += (skewConfigs.current - skewConfigs.previous) * skewConfigs.ease;
+  //   skewConfigs.rounded = Math.round(skewConfigs.previous *100) / 100;
+
+  //   //vars
+  //   const difference = skewConfigs.current - skewConfigs.rounded;
+  //   const acceleration = difference / size.width;
+  //   const velocity = +acceleration;
+  //   const skew = velocity * 7.5;
+
+  //   //
+  //   //scrollContainer.current.style.transform = `translate3d(0,-${skewConfigs.rounded}px, 0) skewY(${skew}deg)`;
+  //   //scrollContainer.current.style.transform = `translate3d(0,-${skewConfigs.rounded}px, 0)`;
+  //   requestAnimationFrame(() => skewScrolling())
+    
+  // }
 
   return (
     <GlobalProvider>
@@ -81,9 +133,11 @@ export default function MyApp(props) {
       <nav>    
         <NavBar toggleMenu={toggleMenu} setToggleMenu={setToggleMenu} />
       </nav>
-       
-          <Component {...pageProps} imagePos={imagePos} setImagePos={setImagePos} />
-       
+      <div className="App" ref={app}>
+        <div className="scroll" ref={scrollContainer} id="scroll-container">
+          <Component {...pageProps} imagePos={imagePos} setImagePos={setImagePos} setLoading={setLoading} loading={loading} />
+        </div>
+      </div>
       
       </div>
       </CursorProvider>

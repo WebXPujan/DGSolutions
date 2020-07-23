@@ -48,3 +48,30 @@ export const projects = [
         ]
     }
 ];
+
+export const team = [
+    {
+        id: 1,
+        name: "John Doe",
+        title: "CEO",
+        image_url: "a-a-ron.jpg.webp"
+    },
+    {
+        id: 2,
+        name: "John Doe",
+        title: "CEO",
+        image_url: "chris-1.jpg.webp"
+    },
+    {
+        id: 3,
+        name: "John Doe",
+        title: "CEO",
+        image_url: "cj-1.jpg.webp"
+    },
+    {
+        id: 4,
+        name: "John Doe",
+        title: "CEO",
+        image_url: "amie-1.jpg.webp"
+    }
+]

@@ -8,8 +8,7 @@ import gsap from "gsap";
 import ProjectBanner from './ProjectBanner';
 import { useRouter } from 'next/router';
 import ProgressiveImage from 'react-progressive-graceful-image'
-import LayerComponent from '../Component/LayerComponent'
-
+import Link from 'next/link'
 const Banner = (props) => {
 
    const router = useRouter();
@@ -34,6 +33,7 @@ const Banner = (props) => {
         height:0
     });
     const [projectDetails,setProjectDetails] = useState({});
+    const [mobile,setMobile] = useState(0);
 
     const { scrollYProgress } = useViewportScroll();
     const showcaseSlide = useTransform(scrollYProgress,[0,1],[1,1.2]);
@@ -56,6 +56,7 @@ const Banner = (props) => {
             
       
         });
+        setMobile(window.innerWidth);
       //console.log(isProjectOpen);
 
 
@@ -77,6 +78,10 @@ const Banner = (props) => {
 
     const viewProject = (e,details) => {
        //e.preventDefault();
+
+       document.querySelector("#navBar .wrapper").classList.remove("slideUp");
+
+
        jQuery(e.currentTarget).closest(".image").addClass('active');
        var offset = jQuery(e.currentTarget).closest(".image").offset();
        var w = jQuery(window);
@@ -100,7 +105,7 @@ const Banner = (props) => {
 
     const handleCloseProject = timeline => {
         //e.preventDefault();
-        
+        document.querySelector("#navBar .wrapper").classList.add("slideUp");
         timeline.eventCallback("onReverseComplete", function(){
         setTimeout(()=>{
         projectClose(false);
@@ -134,10 +139,10 @@ const Banner = (props) => {
 
    }
   
-
-   const placeholder = (
-           <div className="cover"></div>
-  );
+  
+   const handleImgload = (elem) => {
+       gsap.to(elem,0.6,{opacity:1,delay:.1});
+   }
     return(
         //onWheel={isDragged ? handleWheel : undefined}
         <>
@@ -150,7 +155,7 @@ const Banner = (props) => {
                     </AnimatePresence>
                     :
                     <AnimatePresence >
-                    <ProjectBanner x={viewPort.x} y={viewPort.y} width={viewPort.width} height={viewPort.height} stickyTitle={projectDetails.name} stickyDesc={projectDetails.desc} img={projectDetails.img} close={true} closeProject={handleCloseProject}/>
+                        <ProjectBanner x={viewPort.x} y={viewPort.y} width={viewPort.width} height={viewPort.height} stickyTitle={projectDetails.name} stickyDesc={projectDetails.desc} img={projectDetails.img} close={true} closeProject={handleCloseProject}/>
                     </AnimatePresence>
                 
                 ) 
@@ -245,10 +250,10 @@ const Banner = (props) => {
                                         className={isDragged ? (isProjectOpen ? "image" : "image clip") : "image"} 
                                         ref={featureImage}
                                         >
-                                            <ProgressiveImage src={project.img_url} placeholder="" delay={100}>
-                                                {(src, loading) => {
+                                            <ProgressiveImage src={project.img_url} placeholder="">
+                                                {src => {
 
-                                                    return loading ? <div className="cover"/> : <img src={src} alt={project.name} />
+                                                    return <img src={src} alt={project.name} onLoad={(ref) => handleImgload(ref.target)} style={{opacity:0}}/>
                                                 }
 
                                                 }
@@ -262,8 +267,7 @@ const Banner = (props) => {
                                                 button={cta} 
                                                 link={`/?project=${project.id}`}
                                                 viewas={`/project/${project.id}`}
-                                                hasSlug={true} 
-                                                onClick={viewProject} 
+                                                hasSlug={true}  
                                                 details={{name:project.name,desc:project.desc,img:project.img_url,slug:project.id}} 
                                                 onClick={viewProject}
                                                 /> )
@@ -281,6 +285,87 @@ const Banner = (props) => {
                     
                 </motion.ul>
             </motion.section>
+
+            {
+               mobile <= 840 && (
+                    <section className="sections mob-featured-projects" >
+                            <motion.ul
+                            drag={"x"}
+                            dragConstraints={{
+                                left: -mobile,
+                                right: 0,
+                            }}
+                            dragElastic={0.005}
+                            >
+                                {
+                                     props.projects.map( (project,i) => (
+                                        <li key={project.name+i}>
+                                        
+                                                <div className="info" >
+                                                    <strong className="number gray">{`0${i+1}`}</strong>
+                                                    <h1 className="black title title__small text-capitalize">{project.name}</h1>
+                                                    <p className="green subtitle subtitle__small big text-capitalize sec-font"><i className="fas fa-info-circle"></i>website, Mobile Apps</p>
+                                                </div> 
+                                                <Link href="/project/[project]" as={`/project/${project.id}`}>
+                                                <a>
+                                                    <div className="thumb">
+                                                        
+                                                        <ProgressiveImage src={project.img_url} placeholder="">
+                                                            {src => {
+
+                                                                return <img src={src} alt={project.name} onLoad={(ref) => handleImgload(ref.target)} style={{opacity:0}}/>
+                                                            }
+
+                                                            }
+                                                        </ProgressiveImage>
+                                                        
+                                                    </div>
+                                                </a>
+                                            </Link>
+                                                
+                                        </li>
+                                     ))
+                                }
+                                
+                                <li className="cta">
+                                       
+                                    <Link href="/projects">
+                                    <a>
+                                        <div className="thumb">
+
+                                            <h1 className="title title__big">View more</h1>
+                                            <span className="icons">
+                                                <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+                                                viewBox="0 0 512 512" style={{enableBackground:"new 0 0 512 512"}}>
+                                                <g>
+                                                <g>
+                                                <path d="M390.595,281.767c-3.206-5.581-9.139-9.02-15.569-9.02H136.969c-6.43,0-12.363,3.439-15.563,9.02
+                                                c-3.2,5.581-3.17,12.441,0.078,17.992l119.028,203.365c3.218,5.497,9.115,8.876,15.486,8.876c6.37,0,12.268-3.385,15.492-8.876
+                                                l119.022-203.365C393.759,294.209,393.801,287.348,390.595,281.767z M255.997,458.527l-87.734-149.892h175.462L255.997,458.527z"
+                                                />
+                                                </g>
+                                                </g>
+                                                <g>
+                                                <g>
+                                                <path d="M255.997,0c-9.911,0-17.944,8.033-17.944,17.944v272.748c0,9.911,8.033,17.944,17.944,17.944
+                                                c9.911,0,17.944-8.033,17.944-17.944V17.944C273.941,8.033,265.908,0,255.997,0z"/>
+                                                </g>
+                                                </g>
+                                                </svg>
+                                            </span>
+
+                                            
+                                            
+                                        </div>
+                                    </a>
+                                </Link>
+                                    
+                            </li>
+                                
+                            </motion.ul>
+                    </section>
+                )
+            }
             
         </motion.section>
         </>

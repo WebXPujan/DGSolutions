@@ -1,5 +1,7 @@
 import {useContext} from "react"
 import {GlobalContext} from "../context/GlobalContext"
+import Link from 'next/link'
+import NavLink from '../Component/NavLink'
 const Footer = () => {
     const [cursor,setCursor] = useContext(GlobalContext)
     return(
@@ -145,14 +147,7 @@ const Footer = () => {
     <footer>
         <div className="container">
             <div className="column col-12">
-                <ul className="nav-items nav-link">
-                    <li><a href="">Home</a></li>
-                    <li><a href="">Gurkha Team</a></li>
-                    <li><a href="">Our Services</a></li>
-                    <li><a href="">Case Studies</a></li>
-                    <li><a href="">Podcast</a></li>
-                    <li><a href="">Blog</a></li>
-                </ul><br/>
+                <NavLink /><br/>
                 <p className="foot-note">
                     &copy; 2020 DigitalGurkha. All rights Reserved.&nbsp;
                     <a href="" className="dg-link"

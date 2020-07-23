@@ -15,11 +15,11 @@ const fetcher = async (url) => {
   }
 
 
-const Blog = ({setLoading}) => {
+const Blog = ({setLoading,loading}) => {
     const [isLoaded,loaded] = useState(false)
     
-        const { data, error } = useSWR(`https://newsapi.org/v2/top-headlines?country=us&apiKey=e6c514c259024fbfa5f9e2de2684fefd`,fetcher)
-    
+       // const { data, error } = useSWR(`https://newsapi.org/v2/top-headlines?country=us&apiKey=e6c514c259024fbfa5f9e2de2684fefd`,fetcher)
+        const {data, error} = useSWR('https://desnepal.com/wp-json/wp/v2/posts',fetcher)
     
        if (error) return <div>{error.message}</div>
        if (!data) return <div>loading...</div>
@@ -28,7 +28,7 @@ const Blog = ({setLoading}) => {
   
     return(
         
-        <section id="blog" className="sections" onLoad={()=>setLoading(false)}>
+        <section id="blog" className="sections" onLoad={()=>setLoading(!loading)}>
         <div className="container">
             <div className="columns">
                 <div className="col-12">
@@ -37,11 +37,12 @@ const Blog = ({setLoading}) => {
                 <div className="col-12 news-wrap">
                     {
                        
-                        data.articles.map((post,i)=>(
+                        data.map((post,i)=>(
                             <BlogCard key={i} 
-                            title={post.title} 
-                            desc={post.description}
-                            img={post.urlToImage}
+                            title={post.title.rendered} 
+                            desc={post.excerpt.rendered}
+                            img={post.featured_media}
+                            slug={post.slug}
                             />
                         ))
                     }

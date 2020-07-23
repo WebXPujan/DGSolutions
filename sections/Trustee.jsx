@@ -87,7 +87,7 @@ const Trustee = () => {
                             data[1].trustee.map((trust,i) => (
                                 <li className="list-items" key={i}>
                                 <div className="thumb">
-                                    <img src={`https://unsplash.it/136${i+1}`} alt={trust.client_name}/>
+                                    <img src={`/images/clients/${trust.logo}`} alt={trust.client_name}/>
                                 </div>
                                 </li>
                             ))
