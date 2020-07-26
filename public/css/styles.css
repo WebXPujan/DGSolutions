@@ -2002,5 +2002,8 @@ footer .screen{
         font-size: 14px;
         margin-top: -10px;
     }
+    section#services .services-item ul li a{
+        width: 68vw;
+    }
 }
 /*responsive*/
