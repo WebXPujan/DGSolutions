@@ -1042,8 +1042,7 @@ section#banner .showcase li.expanded.viewport .thumbnail{
 section.banner-project{
     z-index: 100;
     overflow: hidden;
-    left: 0 !important;
-    width: 100vw !important;
+    
 }
 section.banner-project img{
     width: 100%;
@@ -1786,6 +1785,10 @@ footer .screen{
     
     .sections.mob-featured-projects{
         display: block;
+    }
+    section.banner-project{
+        left: 0 !important;
+        width: 100vw !important;
     }
     section#services .info{
         padding-top: 30px;

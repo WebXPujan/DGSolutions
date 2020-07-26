@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import '../public/css/styles.css';
 import NavBar from '../sections/NavBar';
-import Footer from '../sections/Footer';
 import CustomCursor from '../Component/customCursor';
 import {GlobalProvider} from '../context/GlobalContext';
 import OffNav from '../sections/OffNav';
