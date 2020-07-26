@@ -1819,6 +1819,7 @@ footer .screen{
     section#testimonials .testi-slider {
         padding-left: 0;
         margin-bottom: 10%;
+        max-height: 80vh;
     }
     section#testimonials .testi-slider .info{
         flex-direction: column;
